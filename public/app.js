@@ -19,7 +19,7 @@ const maxDataPoints = 15;
 
 function initChart() {
     const ctx = document.getElementById('pulseChart').getContext('2d');
-    
+
     // Gradient for the line
     const gradient = ctx.createLinearGradient(0, 0, 0, 400);
     gradient.addColorStop(0, 'rgba(255, 215, 0, 0.5)');
@@ -68,7 +68,7 @@ function initChart() {
 
 function updateChart(score) {
     const timeLabel = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    
+
     chartInstance.data.labels.push(timeLabel);
     chartInstance.data.datasets[0].data.push(score);
 
@@ -108,7 +108,7 @@ function updateGauge(score, emotion) {
 function updateFeed(samples, emotion) {
     const container = document.getElementById('live-feed-container');
     container.innerHTML = ""; // Clear current feed
-    
+
     const color = EMOTION_COLORS[emotion] || "#e9c400";
 
     samples.forEach(sample => {
@@ -130,15 +130,22 @@ function updateFeed(samples, emotion) {
 
 async function fetchEmotion() {
     try {
-        const response = await fetch('/api/getEmotion');
+        // REPLACE WITH YOUR JSONBIN BIN ID
+        const BIN_ID = "69e8fa9e36566621a8de74b3";
+
+        // If your JSONBin is public, you only need the URL.
+        const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`);
         if (!response.ok) throw new Error("API failed");
-        
-        const data = await response.json();
-        
+
+        const json = await response.json();
+
+        // JSONBin wraps data inside a "record" object
+        const data = json.record;
+
         updateGauge(data.score, data.emotion);
         updateChart(data.score);
         updateFeed(data.samples, data.emotion);
-        
+
     } catch (err) {
         console.error("Error fetching emotion:", err);
     }
@@ -148,7 +155,7 @@ async function fetchEmotion() {
 document.addEventListener('DOMContentLoaded', () => {
     initChart();
     fetchEmotion(); // Initial fetch
-    
+
     // Poll every 10 seconds
     setInterval(fetchEmotion, 10000);
 });
