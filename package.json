@@ -1,9 +1,5 @@
 {
   "name": "crickty",
   "version": "1.0.0",
-  "dependencies": {
-    "@google/genai": "^0.1.2",
-    "axios": "^1.7.9",
-    "cors": "^2.8.5"
-  }
+  "dependencies": {}
 }
