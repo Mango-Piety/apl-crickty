@@ -161,8 +161,10 @@ async function fetchEmotion() {
     try {
         const ai = await loadAI();
         
-        // Fetch raw live data from our Vercel proxy
-        const response = await fetch('/api/reddit');
+        // We use AllOrigins CORS proxy to fetch real Reddit data directly from the browser!
+        // This completely bypasses Vercel's IP being blocked by Reddit.
+        const redditUrl = encodeURIComponent('https://www.reddit.com/r/Cricket/search.json?q=LSG%20RR&sort=new&limit=5');
+        const response = await fetch(`https://api.allorigins.win/raw?url=${redditUrl}`);
         if (!response.ok) throw new Error("API failed");
         
         const json = await response.json();
