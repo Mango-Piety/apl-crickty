@@ -1,3 +1,5 @@
+import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
+
 const EMOTION_COLORS = {
     "Euphoria": "#6ffbbe", // tertiary-fixed
     "Excitement": "#adc6ff", // secondary
@@ -128,24 +130,58 @@ function updateFeed(samples, emotion) {
     });
 }
 
+let sentimentPipeline = null;
+
+async function loadAI() {
+    if (!sentimentPipeline) {
+        document.getElementById('emotion-label').innerText = "Loading AI Model...";
+        sentimentPipeline = await pipeline('sentiment-analysis', 'Xenova/distilbert-base-uncased-finetuned-sst-2-english');
+    }
+    return sentimentPipeline;
+}
+
 async function fetchEmotion() {
     try {
-        // REPLACE WITH YOUR JSONBIN BIN ID
-        const BIN_ID = "69e8fa9e36566621a8de74b3";
-
-        // If your JSONBin is public, you only need the URL.
-        const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`);
+        const ai = await loadAI();
+        
+        // Fetch raw live data from our Vercel proxy
+        const response = await fetch('/api/reddit');
         if (!response.ok) throw new Error("API failed");
-
+        
         const json = await response.json();
+        const posts = json.data.children;
+        
+        let totalScore = 0;
+        let samples = [];
+        
+        for (let post of posts) {
+            let text = post.data.title;
+            // Run local browser AI
+            let result = await ai(text); // e.g. [{ label: 'POSITIVE', score: 0.99 }]
+            let rawScore = result[0].label === 'POSITIVE' ? result[0].score : -result[0].score;
+            totalScore += rawScore;
+            
+            samples.push({
+                author: post.data.author || "reddit_user",
+                text: text,
+                source: "Reddit",
+                time: "just now"
+            });
+        }
+        
+        let avgScore = totalScore / posts.length; // -1 to 1
+        
+        let emotion = "Neutral";
+        if (avgScore > 0.5) emotion = "Euphoria";
+        else if (avgScore > 0.1) emotion = "Excitement";
+        else if (avgScore > -0.1) emotion = "Neutral";
+        else if (avgScore > -0.5) emotion = "Frustration";
+        else emotion = "Disbelief";
 
-        // JSONBin wraps data inside a "record" object
-        const data = json.record;
-
-        updateGauge(data.score, data.emotion);
-        updateChart(data.score);
-        updateFeed(data.samples, data.emotion);
-
+        updateGauge(avgScore, emotion);
+        updateChart(avgScore);
+        updateFeed(samples.slice(0, 4), emotion);
+        
     } catch (err) {
         console.error("Error fetching emotion:", err);
     }
