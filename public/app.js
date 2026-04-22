@@ -134,8 +134,25 @@ let sentimentPipeline = null;
 
 async function loadAI() {
     if (!sentimentPipeline) {
-        document.getElementById('emotion-label').innerText = "Loading AI Model...";
-        sentimentPipeline = await pipeline('sentiment-analysis', 'Xenova/distilbert-base-uncased-finetuned-sst-2-english');
+        const labelText = document.getElementById('emotion-label');
+        const scoreText = document.getElementById('emotion-score-text');
+        
+        labelText.innerText = "Initiating AI Engine...";
+        scoreText.innerText = "AI";
+        
+        sentimentPipeline = await pipeline('sentiment-analysis', 'Xenova/distilbert-base-uncased-finetuned-sst-2-english', {
+            progress_callback: (data) => {
+                if (data.status === 'download') {
+                    labelText.innerText = `Downloading Model (${data.name})...`;
+                    // If progress is available, show it on the giant text
+                    if (data.progress !== undefined) {
+                        scoreText.innerText = `${Math.round(data.progress)}%`;
+                    }
+                } else if (data.status === 'done') {
+                    labelText.innerText = "AI Engine Ready!";
+                }
+            }
+        });
     }
     return sentimentPipeline;
 }
