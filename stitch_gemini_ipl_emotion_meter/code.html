@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CROWD PULSE | IPL Broadcaster Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#2e3541",
+                        "on-background": "#dce2f3",
+                        "primary-fixed-dim": "#e9c400",
+                        "tertiary-fixed": "#6ffbbe",
+                        "error-container": "#93000a",
+                        "outline": "#999077",
+                        "inverse-on-surface": "#2a313d",
+                        "surface-container": "#19202b",
+                        "on-tertiary": "#003824",
+                        "outline-variant": "#4d4732",
+                        "on-primary-container": "#705e00",
+                        "on-primary": "#3a3000",
+                        "surface-container-highest": "#2e3541",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "error": "#ffb4ab",
+                        "secondary": "#adc6ff",
+                        "on-primary-fixed-variant": "#544600",
+                        "on-secondary-container": "#e6ecff",
+                        "on-primary-fixed": "#221b00",
+                        "surface-container-low": "#151c27",
+                        "surface-container-high": "#232a36",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "surface-tint": "#e9c400",
+                        "secondary-container": "#0566d9",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#323946",
+                        "tertiary-container": "#65f2b5",
+                        "tertiary": "#d8ffe7",
+                        "on-secondary-fixed-variant": "#004395",
+                        "inverse-primary": "#705d00",
+                        "surface": "#0c141f",
+                        "primary": "#fff6df",
+                        "secondary-fixed": "#d8e2ff",
+                        "background": "#0c141f",
+                        "surface-dim": "#0c141f",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-tertiary-fixed": "#002113",
+                        "on-secondary": "#002e6a",
+                        "on-surface-variant": "#d0c6ab",
+                        "primary-container": "#ffd700",
+                        "inverse-surface": "#dce2f3",
+                        "on-secondary-fixed": "#001a42",
+                        "on-tertiary-container": "#006d4a",
+                        "primary-fixed": "#ffe16d",
+                        "on-surface": "#dce2f3",
+                        "surface-container-lowest": "#070e19",
+                        "on-error": "#690005"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "lg": "24px",
+                        "xl": "40px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "unit": "4px",
+                        "margin": "32px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "data-mono": ["Space Grotesk"],
+                        "body-lg": ["Lexend"],
+                        "label-caps": ["Space Grotesk"],
+                        "headline-lg": ["Lexend"],
+                        "display-bold": ["Lexend"],
+                        "headline-md": ["Lexend"],
+                        "body-md": ["Lexend"]
+                    },
+                    "fontSize": {
+                        "data-mono": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "display-bold": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(46, 53, 65, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-gold {
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
+        }
+        .active-glow {
+            box-shadow: inset 0 0 12px rgba(255, 215, 0, 0.2);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #ffd700;
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-6 h-16 bg-slate-950/40 backdrop-blur-md border-b border-white/10 shadow-[0_4_20px_rgba(0,0,0,0.5)]">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-yellow-400 p-2 hover:bg-white/5 transition-colors rounded-lg">menu</button>
+<span class="text-2xl font-black text-yellow-400 drop-shadow-[0_0_8px_rgba(255,215,0,0.4)] font-['Lexend'] font-bold tracking-tighter">CROWD PULSE</span>
+</div>
+<div class="hidden md:flex items-center gap-8 glass-card px-6 py-2 rounded-full border-white/5">
+<div class="flex flex-col items-center">
+<span class="font-label-caps text-[10px] text-slate-400">MATCH STATUS</span>
+<span class="font-data-mono text-yellow-400 text-sm">LIVE: LKO vs RAJ</span>
+</div>
+<div class="h-8 w-px bg-white/10"></div>
+<div class="flex flex-col items-center">
+<span class="font-label-caps text-[10px] text-slate-400">SCORE</span>
+<span class="font-data-mono text-white text-sm">178/4 (18.2)</span>
+</div>
+<div class="h-8 w-px bg-white/10"></div>
+<div class="flex flex-col items-center">
+<span class="font-label-caps text-[10px] text-slate-400">TARGET</span>
+<span class="font-data-mono text-white text-sm">192</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="font-label-caps text-[10px] text-yellow-400">ANALYST PRO</p>
+<p class="font-body-md text-xs font-bold">LIVE BROADCAST</p>
+</div>
+<img alt="Analyst Profile" class="w-10 h-10 rounded-full border-2 border-yellow-400" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2oFgcYcy7eOnZh_IMWbIYKtMmhMZi1z4oukuLEtVyJknDAgIV147wkn9FLniMJaGBv-N4jr9PHNCh0AwqkjcK0oUJCUbuq712dUKK7b77zBuT4GLvNsfCqE3urUmsrY1m0wb7saI0UPLbd0KR5zQaazWg07hsqcm2izofeu47O5dGTEkH_iwT-9wBPxQlHuJChmVqkdR8HYQWwy22ttX_2p4VkuWIzAiLVP9VDstIqkbMzmURxYpGljrvwr5vofnwgefcox4aKjmC"/>
+</div>
+</header>
+<main class="pt-24 pb-24 px- margin max-w-screen-2xl mx-auto grid grid-cols-12 gap-gutter">
+<!-- Hero Section: Current Crowd Emotion -->
+<section class="col-span-12 lg:col-span-5 glass-card rounded-xl p-lg flex flex-col items-center justify-center min-h-[400px] relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+<div class="absolute inset-0 bg-gradient-to-br from-primary-container to-transparent"></div>
+</div>
+<h2 class="font-headline-md text-on-background mb-lg self-start">Current Crowd Emotion</h2>
+<div class="relative w-64 h-64 flex items-center justify-center">
+<!-- SVG Gauge -->
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-highest" cx="128" cy="128" fill="transparent" r="110" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-yellow-400 glow-gold" cx="128" cy="128" fill="transparent" r="110" stroke="currentColor" stroke-dasharray="691" stroke-dashoffset="124" stroke-width="12"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="font-display-bold text-yellow-400 text-6xl drop-shadow-lg">82%</span>
+<span class="font-headline-md text-on-background mt-2">Euphoria 🔥</span>
+</div>
+</div>
+<div class="mt-lg w-full flex justify-between gap-4">
+<div class="flex-1 glass-card p-md rounded-lg text-center border-white/5">
+<p class="font-label-caps text-slate-400 mb-1">STADIUM DB</p>
+<p class="font-data-mono text-lg text-yellow-400">104.2</p>
+</div>
+<div class="flex-1 glass-card p-md rounded-lg text-center border-white/5">
+<p class="font-label-caps text-slate-400 mb-1">SENTIMENT PK</p>
+<p class="font-data-mono text-lg text-yellow-400">+12.4%</p>
+</div>
+</div>
+</section>
+<!-- Emotional Pulse: Trend Chart -->
+<section class="col-span-12 lg:col-span-7 glass-card rounded-xl p-lg flex flex-col">
+<div class="flex justify-between items-center mb-lg">
+<h2 class="font-headline-md text-on-background">Emotional Pulse Trend</h2>
+<div class="flex gap-2">
+<span class="bg-yellow-400/20 text-yellow-400 text-[10px] font-bold px-2 py-1 rounded border border-yellow-400/30 uppercase">Last 10 Overs</span>
+<span class="bg-surface-variant text-on-background text-[10px] font-bold px-2 py-1 rounded border border-white/10 uppercase">Live Update</span>
+</div>
+</div>
+<div class="flex-1 w-full min-h-[250px] relative mt-4 flex items-end justify-between px-2">
+<!-- Mock Chart Lines -->
+<div class="absolute inset-0 flex items-end">
+<svg class="w-full h-full overflow-visible" viewbox="0 0 600 200">
+<path class="drop-shadow-[0_0_10px_rgba(255,215,0,0.5)]" d="M0,150 Q100,50 200,120 T400,30 T600,100" fill="none" stroke="url(#goldGradient)" stroke-width="4"></path>
+<defs>
+<lineargradient id="goldGradient" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0%" stop-color="#ffd700" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#ffd700"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<!-- X Axis Labels -->
+<div class="w-full flex justify-between pt-4 border-t border-white/10">
+<span class="font-data-mono text-[10px] text-slate-500">OVER 10</span>
+<span class="font-data-mono text-[10px] text-slate-500">12</span>
+<span class="font-data-mono text-[10px] text-slate-500">14</span>
+<span class="font-data-mono text-[10px] text-slate-500">16</span>
+<span class="font-data-mono text-[10px] text-yellow-400">LIVE (18.2)</span>
+</div>
+</div>
+<div class="mt-lg grid grid-cols-4 gap-4">
+<div class="flex flex-col">
+<span class="text-[10px] font-label-caps text-tertiary-fixed-dim">EUPHORIA</span>
+<div class="h-1 bg-tertiary-fixed-dim mt-1 w-full rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-label-caps text-secondary">EXCITEMENT</span>
+<div class="h-1 bg-secondary mt-1 w-3/4 rounded-full opacity-50"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-label-caps text-error">FRUSTRATION</span>
+<div class="h-1 bg-error mt-1 w-1/4 rounded-full opacity-30"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-label-caps text-on-surface-variant">NEUTRAL</span>
+<div class="h-1 bg-on-surface-variant mt-1 w-1/2 rounded-full opacity-50"></div>
+</div>
+</div>
+</section>
+<!-- Team Sentiment Comparison -->
+<section class="col-span-12 md:col-span-4 glass-card rounded-xl p-lg flex flex-col">
+<h2 class="font-headline-md text-on-background mb-lg">Fan Intensity</h2>
+<div class="flex flex-col gap-8 flex-1 justify-around py-4">
+<div class="flex items-center gap-6">
+<div class="relative w-24 h-24 shrink-0">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-highest" cx="48" cy="48" fill="transparent" r="42" stroke="currentColor" stroke-width="6"></circle>
+<circle class="text-primary-fixed-dim" cx="48" cy="48" fill="transparent" r="42" stroke="currentColor" stroke-dasharray="264" stroke-dashoffset="66" stroke-width="6"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center font-data-mono text-lg text-primary-fixed-dim">75%</div>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-white">LSG Fans</span>
+<span class="font-label-caps text-[10px] text-tertiary-fixed-dim mt-1">DOMINANT EUPHORIA</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative w-24 h-24 shrink-0">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-highest" cx="48" cy="48" fill="transparent" r="42" stroke="currentColor" stroke-width="6"></circle>
+<circle class="text-error" cx="48" cy="48" fill="transparent" r="42" stroke="currentColor" stroke-dasharray="264" stroke-dashoffset="145" stroke-width="6"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center font-data-mono text-lg text-error">45%</div>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-white">RR Fans</span>
+<span class="font-label-caps text-[10px] text-error mt-1">GROWING FRUSTRATION</span>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
+<span class="text-xs text-slate-400 font-body-md">Global Fan Reach</span>
+<span class="text-xs text-yellow-400 font-data-mono">2.4M ACTIVE</span>
+</div>
+</section>
+<!-- Live Feed: Social Sentiments -->
+<section class="col-span-12 md:col-span-8 glass-card rounded-xl p-lg flex flex-col max-h-[500px]">
+<div class="flex justify-between items-center mb-lg">
+<div class="flex items-center gap-3">
+<h2 class="font-headline-md text-on-background">Live Intelligence Feed</h2>
+<div class="flex items-center gap-2 px-2 py-0.5 bg-error-container/20 rounded border border-error-container/40">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
+<span class="text-[10px] font-bold text-error uppercase">Live Pulse</span>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="material-symbols-outlined text-slate-400 hover:text-white transition-colors">filter_list</button>
+<button class="material-symbols-outlined text-slate-400 hover:text-white transition-colors">settings</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar space-y-4 pr-2">
+<!-- Feed Item 1 -->
+<div class="p-md bg-white/5 rounded-lg border-l-4 border-tertiary-fixed-dim hover:bg-white/10 transition-all group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="font-data-mono text-xs text-yellow-400">@ipl_fanatic</span>
+<span class="text-[10px] text-slate-500 font-body-md">2m ago via Twitter</span>
+</div>
+<span class="px-2 py-0.5 bg-tertiary-fixed-dim/20 text-tertiary-fixed-dim text-[10px] font-bold rounded uppercase">Excitement</span>
+</div>
+<p class="text-sm font-body-md text-on-background leading-relaxed">What a massive six from KL Rahul! The energy in the stadium is absolutely electric tonight. LSG looking strong! 🏏🔥</p>
+</div>
+<!-- Feed Item 2 -->
+<div class="p-md bg-white/5 rounded-lg border-l-4 border-error hover:bg-white/10 transition-all group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="font-data-mono text-xs text-yellow-400">u/RajasthanRoyals_Army</span>
+<span class="text-[10px] text-slate-500 font-body-md">4m ago via Reddit</span>
+</div>
+<span class="px-2 py-0.5 bg-error/20 text-error text-[10px] font-bold rounded uppercase">Frustration</span>
+</div>
+<p class="text-sm font-body-md text-on-background leading-relaxed">Another drop catch... RR needs to wake up in the field if they want to defend this total. Frustrating to watch.</p>
+</div>
+<!-- Feed Item 3 -->
+<div class="p-md bg-white/5 rounded-lg border-l-4 border-secondary hover:bg-white/10 transition-all group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="font-data-mono text-xs text-yellow-400">@cricket_intel</span>
+<span class="text-[10px] text-slate-500 font-body-md">7m ago via Twitter</span>
+</div>
+<span class="px-2 py-0.5 bg-secondary/20 text-secondary text-[10px] font-bold rounded uppercase">Insight</span>
+</div>
+<p class="text-sm font-body-md text-on-background leading-relaxed">Win probability shifting towards LSG at 68%. Crowd sentiment mirroring the data perfectly.</p>
+</div>
+<!-- Feed Item 4 -->
+<div class="p-md bg-white/5 rounded-lg border-l-4 border-tertiary-fixed-dim hover:bg-white/10 transition-all group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="font-data-mono text-xs text-yellow-400">@stadium_vibe</span>
+<span class="text-[10px] text-slate-500 font-body-md">10m ago via Twitter</span>
+</div>
+<span class="px-2 py-0.5 bg-tertiary-fixed-dim/20 text-tertiary-fixed-dim text-[10px] font-bold rounded uppercase">Euphoria</span>
+</div>
+<p class="text-sm font-body-md text-on-background leading-relaxed">The roar for that wicket was deafening! 110dB recorded. Fans are going wild!</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Navigation Bar (Bottom) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-slate-950/60 backdrop-blur-xl border-t border-white/10 shadow-[0_-4px_24px_rgba(0,0,0,0.8)] rounded-t-2xl">
+<a class="flex flex-col items-center justify-center text-yellow-400 bg-yellow-400/10 shadow-[inset_0_0_12px_rgba(255,215,0,0.2)] rounded-xl px-3 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
+<span class="font-['Lexend'] text-[10px] font-semibold uppercase tracking-widest mt-1">Live Pulse</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 hover:text-yellow-200 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span class="font-['Lexend'] text-[10px] font-semibold uppercase tracking-widest mt-1">Analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 hover:text-yellow-200 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-['Lexend'] text-[10px] font-semibold uppercase tracking-widest mt-1">Squads</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 hover:text-yellow-200 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-['Lexend'] text-[10px] font-semibold uppercase tracking-widest mt-1">Archive</span>
+</a>
+</nav>
+</body></html>
